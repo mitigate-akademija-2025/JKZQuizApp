@@ -1,5 +1,6 @@
 class Entry < ApplicationRecord
   belongs_to :user
+  has_many :questions
 
   validates :description, presence: { message: "can't be blank. Please describe the quiz." }
   validate :description_should_be_valid

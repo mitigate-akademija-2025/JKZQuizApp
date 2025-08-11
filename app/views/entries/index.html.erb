@@ -16,6 +16,7 @@
         </nav>
       </div>
       <div class="entries-card__main">
+        <%= link_to "tessasa", entry_questions_path(@main_entry)%>
         <%= turbo_frame_tag 'main_dashboard' do %>
           <% if @entries.any? %>
             <%= render partial: 'entries/main', locals: { entry: @main_entry } %>

@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   get '/about', to: 'pages#about'
   get '/contact', to: 'pages#contact'
 
-  resources :entries
+resources :entries do
+  resources :questions
+end
   
   # root "pages#home"
   root 'entries#index'

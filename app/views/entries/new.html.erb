@@ -36,17 +36,6 @@
               <div id="description_counter" class="text-end small text-muted">0 characters</div>
             </div>
 
-            <div id="questions_container">
-           <div class="form-floating mb-3">
-                <%= form.text_field(:questions, placeholder: "Question #1", class: "form-control", id: "question_1") %>
-                <%= form.label(:questions, "Question 1") %>
-              </div>
-              <div class="form-floating mb-3">
-                <%= form.text_field(:questions, placeholder: "Question #2", class: "form-control", id: "question_2") %>
-                <%= form.label(:questions, "Question 2") %>
-              </div>
-            </div>
-
             <%= form.submit "+ Create New Quiz", class: "btn btn-primary" %>
           <% end %>
         </div>

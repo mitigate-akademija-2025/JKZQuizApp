@@ -4,7 +4,9 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: %i[show edit update destroy]
 
   def index
+     @entry = current_user.entries.find(params[:entry_id]) # or use before_action
     @questions = @entry.questions
+    @question = @entry.questions.new
   end
 
   def show
@@ -15,6 +17,7 @@ end
 
 
   def new
+    @entry = current_user.entries.find(params[:entry_id]) # or use before_action :set_entry
     @question = @entry.questions.new
   end
 

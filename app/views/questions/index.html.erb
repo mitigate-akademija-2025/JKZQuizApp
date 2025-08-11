@@ -1,1 +1,27 @@
-kakas
+<%= turbo_frame_tag 'main_dashboard' do %>
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <h1>New Question</h1>
+    <%= link_to "Cancel", entry_path(@entry), class: "btn btn-sm btn-outline-danger" %>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <%= form_with(model: [@entry, @question], local: false) do |form| %>
+            <div class="form-floating mb-4">
+              <%= form.text_field :text, placeholder: 'Quiz Question', class: 'form-control form-control-lg', autofocus: true %>
+              <%= form.label :text, "Quiz Question" %>
+              <% if @question.errors[:text].any? %>
+                <div class="text-danger mt-1"><%= @question.errors[:text].first %></div>
+              <% end %>
+            </div>
+
+            <%= form.submit "+ Create New Quiz Question", class: "btn btn-primary" %> 
+            <%= link_to "Show Questions", entry_questions_path(@entry), class: "btn btn-info ms-2" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

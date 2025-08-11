@@ -1,8 +1,19 @@
-<%= form_with(model: [@entry, @question]) do |form| %>
-  <div class="form-floating mb-3">
-    <%= form.text_field :text, placeholder: 'Quiz Question', class: 'form-control' %>
-    <%= form.label :text, "Quiz Question" %>
-  </div>
+# <h1><%= @entry.title || "Entry Details" %></h1>
 
-  <%= form.submit "+ Create New Quiz Question", class: "btn btn-primary" %>
-<% end %>
+# <h2>Questions for this Entry</h2>
+
+# <% if @entry.questions.any? %>
+#   <ul class="list-group">
+#     <% @entry.questions.each do |question| %>
+#       <li class="list-group-item">
+#         <%= link_to question.text, entry_question_path(@entry, question) %>
+#       </li>
+#     <% end %>
+#   </ul>
+# <% else %>
+#   <p class="text-muted">No questions found for this entry.</p>
+# <% end %>
+
+# <div class="mt-3">
+#   <%= link_to "Add New Question", new_entry_question_path(@entry), class: "btn btn-primary" %>
+# </div>

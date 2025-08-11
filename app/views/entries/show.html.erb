@@ -1,0 +1,184 @@
+<div class="d-none">
+<%= turbo_frame_tag('main_dashboard') do %>
+    <%= render(partial: 'entries/main', locals: {entry: @entry}) %>
+<% end %>
+</div>
+<div class="container-fluid">
+  <div class="bg-body-tertiary p-5 rounded text-center" role="banner">
+    <h1>Navbar example</h1>
+    <p class="lead">This example is a quick exercise to illustrate how fixed to top navbar works. As you scroll, it will remain fixed to the top of your browser’s viewport.</p> 
+  </div>
+
+  <main>
+    <%= render(partial: 'entries/entry_quiz', locals: { entry: @entry }) %>
+  </main>
+</button>
+
+</div>
+
+<div class="container"> <footer class="py-3 my-4"> <ul class="nav justify-content-center border-bottom pb-3 mb-3"> <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li> <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li> <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li> <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li> <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li> </ul> <p class="text-center text-body-secondary">© 2025 Company, Inc</p> </footer> </div>
+
+
+<script>
+// Use BEM class names consistent with your styles
+const testQuestions = [
+  { question: "Is the sky blue?", options: ["Yes", "No"], correct: 0 },
+  { question: "Is fire cold?", options: ["Yes", "No"], correct: 1 }
+];
+
+const realQuizData = [
+  { question: "What is the capital of France?", options: ["London", "Berlin", "Paris", "Madrid"], correct: 2 },
+  { question: "Which planet is known as the Red Planet?", options: ["Venus", "Mars", "Jupiter", "Saturn"], correct: 1 },
+  { question: "Who painted the Mona Lisa?", options: ["Vincent van Gogh", "Pablo Picasso", "Leonardo da Vinci", "Michelangelo"], correct: 2 },
+  { question: "What is the largest ocean on Earth?", options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"], correct: 3 },
+  { question: "Which element has the chemical symbol 'O'?", options: ["Gold", "Silver", "Oxygen", "Iron"], correct: 2 }
+];
+
+let currentQuestion = 0;
+let score = 0;
+let timer;
+let timeLeft = 30;
+let quizMode = 'test'; // 'test' or 'real'
+
+const questionEl = document.getElementById('question');
+const optionsEl = document.getElementById('options');
+const nextBtn = document.getElementById('next-btn');
+const startQuizBtn = document.getElementById('start-quiz-btn');
+const timerEl = document.getElementById('timer');
+const progressBar = document.querySelector('.progress-bar');
+const quizContainer = document.getElementById('quiz');
+const quizTitle = document.getElementById('quiz-title');
+
+function loadQuestion() {
+  const data = quizMode === 'test' ? testQuestions : realQuizData;
+  const question = data[currentQuestion];
+
+  questionEl.textContent = question.question;
+  optionsEl.innerHTML = '';
+
+  question.options.forEach((option, index) => {
+    const button = document.createElement('button');
+    button.textContent = option;
+    button.classList.add('quiz__options-item');
+    button.addEventListener('click', () => selectOption(button, index));
+    optionsEl.appendChild(button);
+  });
+
+  nextBtn.style.display = 'none';
+
+  if (quizMode === 'real') {
+    timeLeft = 30;
+    timerEl.style.display = 'block';
+    if (timer) clearInterval(timer);
+    startTimer();
+  } else {
+    timerEl.style.display = 'none';
+  }
+
+  updateProgress();
+}
+
+function selectOption(selectedButton, optionIndex) {
+  // Remove previous selection & modifiers
+  Array.from(optionsEl.children).forEach(btn => {
+    btn.classList.remove('quiz__options-item--selected', 'quiz__options-item--correct', 'quiz__options-item--incorrect');
+  });
+
+  selectedButton.classList.add('quiz__options-item--selected');
+  nextBtn.style.display = 'inline-block';
+}
+
+function startTimer() {
+  timerEl.textContent = `Time: ${timeLeft}s`;
+  timer = setInterval(() => {
+    timeLeft--;
+    timerEl.textContent = `Time: ${timeLeft}s`;
+    if (timeLeft <= 0) {
+      clearInterval(timer);
+      checkAnswer();
+    }
+  }, 1000);
+}
+
+function checkAnswer() {
+  const selectedOption = optionsEl.querySelector('.quiz__options-item--selected');
+  if (!selectedOption) return;
+
+  const data = quizMode === 'test' ? testQuestions : realQuizData;
+  const selectedAnswer = Array.from(optionsEl.children).indexOf(selectedOption);
+  const question = data[currentQuestion];
+
+  if (quizMode === 'real') {
+    if (selectedAnswer === question.correct) {
+      score++;
+      selectedOption.classList.add('quiz__options-item--correct');
+    } else {
+      selectedOption.classList.add('quiz__options-item--incorrect');
+      optionsEl.children[question.correct].classList.add('quiz__options-item--correct');
+    }
+    Array.from(optionsEl.children).forEach(button => button.disabled = true);
+    clearInterval(timer);
+  } else {
+    // Test mode: highlight correct/incorrect but no scoring
+    if (selectedAnswer === question.correct) {
+      selectedOption.classList.add('quiz__options-item--correct');
+    } else {
+      selectedOption.classList.add('quiz__options-item--incorrect');
+      optionsEl.children[question.correct].classList.add('quiz__options-item--correct');
+    }
+    Array.from(optionsEl.children).forEach(button => button.disabled = true);
+  }
+}
+
+function updateProgress() {
+  const data = quizMode === 'test' ? testQuestions : realQuizData;
+  const progress = ((currentQuestion + 1) / data.length) * 100;
+  progressBar.style.width = `${progress}%`;
+  progressBar.setAttribute('aria-valuenow', progress);
+}
+
+function showResults() {
+  quizContainer.innerHTML = `
+    <div class="quiz__results">
+      <div class="quiz__results-icon">
+        <i class="fas ${score > realQuizData.length / 2 ? 'fa-trophy text-success' : 'fa-times-circle text-danger'}"></i>
+      </div>
+      <div class="quiz__results-score">Your score: ${score}/${realQuizData.length}</div>
+      <p>${score > realQuizData.length / 2 ? 'Great job!' : 'Better luck next time!'}</p>
+      <button class="btn btn-primary" onclick="location.reload()">Restart Quiz</button>
+    </div>
+  `;
+}
+
+nextBtn.addEventListener('click', () => {
+  checkAnswer();
+  currentQuestion++;
+  const data = quizMode === 'test' ? testQuestions : realQuizData;
+
+  if (currentQuestion < data.length) {
+    loadQuestion();
+  } else {
+    if (quizMode === 'test') {
+      questionEl.textContent = 'Ready for the real quiz?';
+      optionsEl.innerHTML = '';
+      nextBtn.style.display = 'none';
+      startQuizBtn.style.display = 'inline-block';
+      timerEl.style.display = 'none';
+      progressBar.style.width = '100%';
+    } else {
+      showResults();
+    }
+  }
+});
+
+startQuizBtn.addEventListener('click', () => {
+  quizMode = 'real';
+  currentQuestion = 0;
+  score = 0;
+  startQuizBtn.style.display = 'none';
+  quizTitle.textContent = 'Real Quiz';
+  loadQuestion();
+});
+
+loadQuestion();
+</script>

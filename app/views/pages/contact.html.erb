@@ -1,0 +1,46 @@
+<div class="mx-auto w-50 p-3">
+  <%= form_with url: contact_path, method: :post, local: true, class: "needs-validation" do |f| %>
+    <div class="mb-3">
+      <%= f.label :name, "Your Name", class: "form-label" %>
+      <%= f.text_field :name, class: "form-control", required: true, placeholder: "Enter your full name" %>
+      <div class="invalid-feedback">
+        Please enter your name.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :email, "Your Email", class: "form-label" %>
+      <%= f.email_field :email, class: "form-control", required: true, placeholder: "Enter your email" %>
+      <div class="invalid-feedback">
+        Please enter a valid email.
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <%= f.label :message, "Message", class: "form-label" %>
+      <%= f.text_area :message, class: "form-control", rows: 5, required: true, placeholder: "Write your message here" %>
+      <div class="invalid-feedback">
+        Please enter your message.
+      </div>
+    </div>
+
+    <%= f.submit "Send Message", class: "btn btn-primary" %>
+  <% end %>
+</div>
+
+<script>
+  // Example Bootstrap 5 client-side validation
+  (() => {
+    'use strict'
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>

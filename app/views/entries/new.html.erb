@@ -1,0 +1,91 @@
+<%= turbo_frame_tag('main_dashboard') do %>
+  <div class="d-flex align-items-center justify-content-between">
+    <h1>Create New Quiz</h1>
+    <%= link_to("Cancel", entries_path, class: "btn btn-sm btn-outline-danger") %>
+  </div>
+
+<div class="row mt-4">
+  <div class="col-md-12">
+    <div class="col">
+      <div class="card">
+        <div class="card-body">
+          <% if @entry.errors.any? %>
+            <div id="error_explanation" class="alert alert-danger" role="alert">
+              <h4>Please fix the following errors: <%= pluralize(@entry.errors.count, "error") %> found</h4>
+              <ul>
+                <% @entry.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+          <% end %>
+
+          <%= form_with(model: @entry) do |form| %>
+            <div class="form-floating mb-3">
+              <%= form.text_field(:name, placeholder: 'Quiz Name', class: 'form-control') %>
+              <%= form.label(:name, "Quiz Name") %>
+            </div>
+
+            <div class="form-floating mb-3">
+              <%= form.text_area :description, 
+                    placeholder: "Quiz Description", 
+                    class: "form-control", 
+                    id: "description_field", 
+                    style: "height: 120px" %>
+              <%= form.label :description, "Quiz Description", for: "description_field" %>
+              <div id="description_counter" class="text-end small text-muted">0 characters</div>
+            </div>
+
+            <div id="questions_container">
+           <div class="form-floating mb-3">
+                <%= form.text_field(:questions, placeholder: "Question #1", class: "form-control", id: "question_1") %>
+                <%= form.label(:questions, "Question 1") %>
+              </div>
+              <div class="form-floating mb-3">
+                <%= form.text_field(:questions, placeholder: "Question #2", class: "form-control", id: "question_2") %>
+                <%= form.label(:questions, "Question 2") %>
+              </div>
+            </div>
+
+            <%= form.submit "+ Create New Quiz", class: "btn btn-primary" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const descriptionInput = document.getElementById('description_field');
+    const counter = document.getElementById('description_counter');
+
+    function updateCounter() {
+      const length = descriptionInput.value.length;
+      counter.textContent = `${length} character${length !== 1 ? 's' : ''}`;
+    }
+
+    descriptionInput.addEventListener('input', updateCounter);
+
+    // Initialize counter on page load
+    updateCounter();
+
+    // Toggle questions fields
+    const toggleBtn = document.getElementById('toggle_questions');
+    const questionsContainer = document.getElementById('questions_container');
+
+    toggleBtn.addEventListener('click', () => {
+      if (questionsContainer.style.display === 'none') {
+        questionsContainer.style.display = 'block';
+        toggleBtn.textContent = 'Hide Questions';
+      } else {
+        questionsContainer.style.display = 'none';
+        toggleBtn.textContent = 'Add Questions';
+        // Optionally clear question inputs when hiding
+        questionsContainer.querySelectorAll('input').forEach(input => input.value = '');
+      }
+    });
+  });
+</script>

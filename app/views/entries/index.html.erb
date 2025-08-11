@@ -3,7 +3,7 @@
     <div></div>
     <%= link_to "+ Add New Quiz", new_entry_path,
          class: "btn btn-primary",
-         data: { turbo_frame: "main_dashboard" } %>
+         data: { turbo_frame: "main_da board" } %>
   </div>
 
   <div id="dashboard" class="card shadow-sm">
@@ -16,7 +16,7 @@
         </nav>
       </div>
       <div class="entries-card__main">
-        <%= link_to "tessasa", entry_questions_path(@main_entry)%>
+        <%= link_to "Add Questions", entry_questions_path(@main_entry), class: "btn btn-outline-info mb-4" %>
         <%= turbo_frame_tag 'main_dashboard' do %>
           <% if @entries.any? %>
             <%= render partial: 'entries/main', locals: { entry: @main_entry } %>

@@ -4,7 +4,7 @@
     <%= render(layout: 'entries/entry_name', locals: { entry: entry }) do %>
       <div class="d-flex align-items-center justify-content-between flex-grow-1">
        <%= turbo_frame_tag :entry_name, class: 'w-100' do %>
-      <h1 class="mb-0"><%= entry.name %></h1>
+      <h1 class="mb-0"><strong><%= entry.name %></strong></h1>
     <% end %>
           <div class="dropdown">
           <button class="btn btn-outline-light border-0 text-dark me-3" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -70,6 +70,7 @@
             </div>
           </div>
         </li>
+        <div class="list-group">
         <div class="flex-grow-1 mt-4 ms-4 ps-1">
         <div class="fw-bold">
           <%= link_to(entry, target: :_blank, rel: 'noopener noreferrer') do %>
@@ -77,6 +78,7 @@
           <% end %>
         </div>
       </div>
+    </div>
     </div>
   </div>
   <% if entry.questions.any? %>
@@ -86,9 +88,21 @@
       <% end %>
     </ul>
   <% else %>
-    <small class="text-muted">No questions yet</small>
-  <% end %>
-  </ul>
+   <li class="list-group-item mt-4">
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="form-floating w-100">
+      <%= text_field_tag(:questions, 
+            "No questions yet", 
+            readonly: true, 
+            class: "form-control bg-light text-muted fst-italic", 
+            placeholder: "Questions") %>
+      <%= label_tag(:questions, "Questions", class: "fw-bold text-dark") %>
+    </div>
+  </div>
+</li>
+
+<% end %>
+</ul>
 
 
   <!-- Footer dates at bottom -->

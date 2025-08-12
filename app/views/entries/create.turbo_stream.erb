@@ -2,4 +2,5 @@
 <%= turbo_stream.append('entries-list', @entry) %>
 <%= turbo_stream.update('main_dashboard') do %>
     <%= render(partial: 'entries/main', locals: { entry: @entry }) %>
+    <%= render partial: 'questions/questions_add_button', locals: { main_entry: @entry } %>
 <%end %>

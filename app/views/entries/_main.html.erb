@@ -78,8 +78,16 @@
       </div>
     </div>
   </div>
-
-      </ul>
+  <% if entry.questions.any? %>
+    <ul class="mt-2">
+      <% entry.questions.each do |question| %>
+        <li><%= question.text %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <small class="text-muted">No questions yet</small>
+  <% end %>
+  </ul>
 
 
   <!-- Footer dates at bottom -->

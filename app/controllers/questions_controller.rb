@@ -21,18 +21,26 @@ end
     @question = @entry.questions.new
   end
 
-  def create
-    @question = @entry.questions.new(question_params)
-    if @question.save!
-      flash.now[:notice] = "Question created successfully.".html_safe
-      respond_to do |format|
-        format.html { redirect_to entry_questions_path(@entry) }
-        format.turbo_stream
+def create
+  @question = @entry.questions.new(question_params)
+
+  respond_to do |format|
+    if @question.save
+      flash.now[:notice] = "Question created successfully."
+
+      format.html do
+        redirect_to root_path, notice: "Question created successfully."
       end
+
+      format.turbo_stream
     else
-      render :new, status: :unprocessable_entity
+      flash.now[:alert] = "Failed to create question."
+      format.html { render :new, status: :unprocessable_entity }
+      format.turbo_stream { render :new, status: :unprocessable_entity }
     end
   end
+end
+
 
   def edit
   end

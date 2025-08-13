@@ -83,29 +83,34 @@
   </div>
 <div>
   <% if entry.questions.any? %>
-    <ul class="list-group mt-2">
-      <% entry.questions.each do |question| %>
-        <li class="list-group-item">
-          <strong>Q:</strong> <%= question.text %>
+  <ul class="list-group mt-3 shadow-sm rounded-3">
+    <% entry.questions.each do |question| %>
+      <li class="list-group-item py-3">
+        <div class="d-flex align-items-start">
+          <span class="fw-semibold text-success me-2">Question:</span>
+          <span class="flex-grow-1"><%= question.text %></span>
+        </div>
 
-          <% if question.answers.any? %>
-            <ul class="list-group mt-1">
-              <% question.answers.each do |answer| %>
-                <li class="list-group-item list-group-item-secondary">
-                  <strong>A:</strong> <%= answer.answer_text %>
-                </li>
-              <% end %>
-            </ul>
-          <% else %>
-            <p class="text-muted mt-1"><em>No answers yet</em></p>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p class="mt-2"><strong>No questions available</strong></p>
-  <% end %>
+        <% if question.answers.any? %>
+          <ul class="list-group list-group-flush mt-2 ms-3">
+            <% question.answers.each do |answer| %>
+              <li class="list-group-item d-flex align-items-start bg-light border-0 border-top py-2">
+                <span class="fw-semibold text-dark me-2">Answer:</span>
+                <span class="flex-grow-1"><%= answer.answer_text %></span>
+              </li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p class="text-muted mt-2 mb-0 small"><em>No answers yet</em></p>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="alert alert-info mt-3 mb-0"><strong>No questions available</strong></p>
+<% end %>
 </div>
+
 
 
 

@@ -17,12 +17,15 @@
               <% end %>
             </div>
 
+           <% @question.answers.each do |answer| %>
             <div class="form-floating mb-4">
-              <%= form.fields_for :answers, @question.answers do |ff| %>
-                <%= ff.text_field :answer_text, placeholder: 'Quiz Answers', class: 'form-control form-control-lg', autofocus: true %>
-                <%= ff.label :text, "Quiz Answers" %>
+              <%= form.fields_for :answers, answer do |ff| %>
+                <%= ff.text_field :answer_text, placeholder: 'Quiz Answer', class: 'form-control form-control-lg', autofocus: true %>
+                <%= ff.label :answer_text, "Quiz Answer" %>
               <% end %>
             </div>
+          <% end %>
+
 
             <%= form.submit "+ Create New Quiz Question", class: "btn btn-primary" %> 
             <%= form.submit "Add answer", class: "btn btn-info" %>

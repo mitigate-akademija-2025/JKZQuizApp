@@ -24,22 +24,29 @@ end
 def create
   @question = @entry.questions.new(question_params)
 
-  respond_to do |format|
-    if @question.save
-      flash.now[:notice] = "Question created successfully."
-
-      format.html do
-        redirect_to root_path, notice: "Question created successfully."
+  if @question.save
+    flash.now[:notice] = "Question created successfully."
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: "Question created successfully." }
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.update("flash", partial: "shared/flash"),
+        ]
       end
-
-      format.turbo_stream
-    else
-      flash.now[:alert] = "Failed to create question."
+    end
+  else
+    flash.now[:alert] = "Failed to create question."
+    respond_to do |format|
       format.html { render :new, status: :unprocessable_entity }
-      format.turbo_stream { render :new, status: :unprocessable_entity }
+      format.turbo_stream do
+        render turbo_stream: [
+          turbo_stream.update("flash", partial: "shared/flash"),
+        ]
+      end
     end
   end
 end
+
 
 
   def edit

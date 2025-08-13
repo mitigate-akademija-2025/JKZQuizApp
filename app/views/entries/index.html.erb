@@ -18,7 +18,7 @@
           <% end %>
         </nav>
       </div>
-      <div class="entries-card__main">
+      <div class="entries-card__main" style="overflow-y: scroll;">
         <%= turbo_frame_tag 'main_dashboard' do %>
           <% if @entries.any? %>
             <%= render partial: 'entries/main', locals: { entry: @main_entry } %>

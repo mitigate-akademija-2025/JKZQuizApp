@@ -86,15 +86,13 @@
     <% entry.questions.each do |question| %>
       <li class="list-group-item py-3">
         <div class="d-flex align-items-start">
-          <span class="fw-semibold text-success me-2">Question:</span>
           <span class="flex-grow-1"><%= question.text %></span>
         </div>
 
         <% if question.answers.any? %>
           <ul class="list-group list-group-flush mt-2 ms-3">
             <% question.answers.each do |answer| %>
-              <li class="list-group-item d-flex align-items-start bg-light border-0 border-top py-2">
-                <span class="fw-semibold text-dark me-2">Answer:</span>
+              <li class="list-group-item d-flex align-items-start border-0 border-top py-2">
                 <span class="flex-grow-1"><%= answer.answer_text %></span>
               </li>
             <% end %>

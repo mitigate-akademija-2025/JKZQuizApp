@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   get '/stats', to: 'pages#stats'
 
 resources :entries do
-  resources :questions
+  resources :questions do
+    post :add_answer, on: :collection
+  end
 end
   
   # root "pages#home"

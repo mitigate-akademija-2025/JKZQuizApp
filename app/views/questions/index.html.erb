@@ -18,22 +18,14 @@
             </div>
 
             <div class="form-floating mb-4">
-              <%= form.text_field :answer_text, placeholder: 'Quiz Answers', class: 'form-control form-control-lg', autofocus: true %>
-              <%= form.label :text, "Quiz Answers" %>
-              <% if @question.errors[:answer_text].any? %>
-                <div class="text-danger mt-1"><%= @question.errors[:answer_text].first %></div>
+              <%= form.fields_for :answers, @question.answers do |ff| %>
+                <%= ff.text_field :answer_text, placeholder: 'Quiz Answers', class: 'form-control form-control-lg', autofocus: true %>
+                <%= ff.label :text, "Quiz Answers" %>
               <% end %>
             </div>
 
-
-            <div class="form-floating mb-4">
-              <%= form.text_field :answer_text, placeholder: 'Quiz Answers', class: 'form-control form-control-lg', autofocus: true %>
-              <%= form.label :text, "Quiz Answers" %>
-              <% if @question.errors[:answer_text].any? %>
-                <div class="text-danger mt-1"><%= @question.errors[:answer_text].first %></div>
-              <% end %>
-            </div>
             <%= form.submit "+ Create New Quiz Question", class: "btn btn-primary" %> 
+            <%= form.submit "Add answer" %>
           <% end %>
         </div>
       </div>

@@ -4,9 +4,9 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: %i[show edit update destroy]
 
   def index
-     @entry = current_user.entries.find(params[:entry_id]) # or use before_action
     @questions = @entry.questions
     @question = @entry.questions.new
+    @question.answers.build
   end
 
   def show
@@ -19,10 +19,18 @@ end
   def new
     @entry = current_user.entries.find(params[:entry_id]) # or use before_action :set_entry
     @question = @entry.questions.new
+    @question.answers.build
   end
 
 def create
   @question = @entry.questions.new(question_params)
+
+  if params[:commit] == "Add answer"
+    @question.answers.build
+
+    render :index
+    return
+  end
 
   if @question.save
       if params[:question][:answer_text].present?
@@ -76,6 +84,14 @@ end
     end
   end
 
+  # def add_answer
+  #   @questions = @entry.questions
+  #   @question = @entry.questions.new
+  #   @question.answers.build
+
+  #   render :index
+  # end
+
   private
 
 def set_entry
@@ -86,7 +102,8 @@ def set_question
   @question = @entry.questions.find(params[:id])
 end
 
- def question_params
-  params.require(:question).permit(:text, :description)
+def question_params
+  params.require(:question).permit(:text, :description, answers_attributes: [:id, :answer_text, :_destroy])
 end
+
 end

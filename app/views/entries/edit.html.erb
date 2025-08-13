@@ -1,0 +1,19 @@
+<%= turbo_frame_tag params[:input] do %>
+  <%= form_with model: @entry, class: 'd-flex align-items-center gap-2 w-100', style: 'max-width: 600px;' do |form| %>
+    <div class="form-floating flex-grow-1" style="min-width: 0;">
+      <%# In Bootstrap 5, floating labels work best with an empty placeholder %>
+      <%= form.text_field :name, placeholder: ' ', class: 'form-control' %>
+      <%= form.label :name, 'Quiz Name' %>
+    </div>
+
+    <div class="btn-group ms-1 flex-shrink-0" role="group">
+      <%= form.button type: 'submit', class: 'btn btn-sm btn-outline-success' do %>
+        <i class="bi bi-check"></i>
+      <% end %>
+
+      <%= link_to entry_path(@entry), class: 'btn btn-sm btn-outline-danger', data: { turbo: false } do %>
+        <i class="bi bi-x"></i>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

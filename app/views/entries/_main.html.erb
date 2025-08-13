@@ -12,7 +12,7 @@
           </button>
           <ul class="dropdown-menu">
               <li>
-              <%= link_to(edit_entry_path(entry), data: {turbo_frame: :entry_name}, class: 'dropdown-item') do %>
+              <%= link_to(edit_entry_path(entry, input: :entry_name), data: {turbo_frame: :entry_name}, class: 'dropdown-item') do %>
                 <i class="bi bi-pencil-square"></i> Edit Quiz
               <% end %>
             </li>
@@ -47,7 +47,7 @@
               <%= label_tag(:name, "Name", class: 'fw-bold text-dark') %>
             </div>
             <div class="actions">
-              <%= link_to(edit_entry_path(entry), class: 'btn btn-outline-light border-0 text-dark') do %>
+              <%= link_to(edit_entry_path(entry, input: :entry_name), class: 'btn btn-outline-light border-0 text-dark') do %>
                 <i class="bi bi-pencil-square"></i>
               <% end %>
             </div>
@@ -64,8 +64,7 @@
               <%= label_tag(:description, "Description", class: 'fw-bold text-dark') %>
             </div>
             <div class="actions">
-              <%= link_to(edit_entry_path(entry), class: 'btn btn-outline-light border-0 text-dark') do %>
-                <i class="bi bi-pencil-square"></i>
+              <%= link_to(edit_entry_path(entry, input: :entry_name), class: 'btn btn-outline-light border-0 text-dark') do %>
               <% end %>
             </div>
           </div>

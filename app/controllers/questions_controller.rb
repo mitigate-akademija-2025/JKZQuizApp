@@ -25,6 +25,9 @@ def create
   @question = @entry.questions.new(question_params)
 
   if @question.save
+      if params[:question][:answer_text].present?
+      @question.answers.create(answer_text: params[:question][:answer_text])
+    end
     flash.now[:notice] = "Question created successfully."
     respond_to do |format|
       format.html { redirect_to root_path, notice: "Question created successfully." }

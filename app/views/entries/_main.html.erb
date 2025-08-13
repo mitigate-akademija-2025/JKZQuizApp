@@ -81,18 +81,32 @@
     </div>
     </div>
   </div>
-  <div>
- <% if entry.questions.any? %>
-  <ul class="list-group mt-2">
-    <% entry.questions.each do |question| %>
-      <li class="list-group-item"><%= question.text %></li>
-    <% end %>
-  </ul>
-<% else %>
-  <p class="mt-2"><strong>No questions available</strong></p>
-<% end %>
-</ul>
+<div>
+  <% if entry.questions.any? %>
+    <ul class="list-group mt-2">
+      <% entry.questions.each do |question| %>
+        <li class="list-group-item">
+          <strong>Q:</strong> <%= question.text %>
+
+          <% if question.answers.any? %>
+            <ul class="list-group mt-1">
+              <% question.answers.each do |answer| %>
+                <li class="list-group-item list-group-item-secondary">
+                  <strong>A:</strong> <%= answer.answer_text %>
+                </li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="text-muted mt-1"><em>No answers yet</em></p>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="mt-2"><strong>No questions available</strong></p>
+  <% end %>
 </div>
+
 
 
   <!-- Footer dates at bottom -->

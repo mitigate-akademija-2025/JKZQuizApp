@@ -16,7 +16,6 @@ class EntriesController < ApplicationController
 
   def create 
     @entry = current_user.entries.new(entry_params)
-
     if @entry.save
       flash.now[:notice] = "Quiz <strong>#{@entry.name}</strong> - created successfully.".html_safe
       respond_to do |format|

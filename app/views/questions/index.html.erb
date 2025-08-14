@@ -1,6 +1,6 @@
 <%= turbo_frame_tag 'main_dashboard' do %>
   <div class="d-flex align-items-center justify-content-between mb-4">
-    <h1>New Question</h1>
+<h1>New Question For <%= @entry.name %></h1>
     <%= link_to "Cancel", entry_path(@entry), class: "btn btn-sm btn-outline-danger" %>
   </div>
 

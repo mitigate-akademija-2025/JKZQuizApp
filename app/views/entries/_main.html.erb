@@ -86,7 +86,7 @@
     <% entry.questions.each do |question| %>
       <li class="list-group-item py-3">
         <div class="d-flex align-items-start">
-          <span class="flex-grow-1"><%= question.text %></span>
+          <span class="flex-grow-1"><strong><%= question.text %></strong></span>
         </div>
 
         <% if question.answers.any? %>

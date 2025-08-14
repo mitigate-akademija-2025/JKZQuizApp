@@ -40,12 +40,13 @@ def create
     respond_to do |format|
       format.html { redirect_to root_path, notice: "Question created successfully." }
       format.turbo_stream do
-        render turbo_stream: [
-          turbo_stream.update("flash", partial: "shared/flash"),
-        ]
+        # render turbo_stream: [
+        #   turbo_stream.update("flash", partial: "shared/flash"),
+        # ]
+        redirect_to root_path, status: :see_other
       end
     end
-  else
+else
     flash.now[:alert] = "Failed to create question."
     respond_to do |format|
       format.html { render :new, status: :unprocessable_entity }

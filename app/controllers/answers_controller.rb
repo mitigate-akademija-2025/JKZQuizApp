@@ -10,12 +10,11 @@ class AnswersController < ApplicationController
 
   def create
     @answer = @question.answers.new(answer_params)
-
     if @answer.save
       flash.now[:notice] = "Answer created successfully."
       respond_to do |format|
         format.html { redirect_to entry_question_path(@entry, @question) }
-        format.turbo_stream
+        format.turbo_stream {}
       end
     else
       flash.now[:alert] = "Failed to create answer."

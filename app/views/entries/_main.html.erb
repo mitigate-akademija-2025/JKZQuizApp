@@ -113,8 +113,10 @@
 
   <!-- Footer dates at bottom -->
   <div class="text-center mt-3">
-    <div>Modified at: <%= format_time(entry.updated_at) %></div>
-    <div>Created at: <%= format_time(entry.created_at) %></div>
+  <small>
+    <div>Modified at: <%= format_time(entry.updated_at.in_time_zone("Europe/Riga")) %></div>
+    <div>Created at: <%= format_time(entry.created_at.in_time_zone("Europe/Riga")) %></div>
+    </small>
   </div>
 </div>
 </div>
